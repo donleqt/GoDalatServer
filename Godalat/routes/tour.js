@@ -50,4 +50,54 @@ router.post('/getTourWithId',function (req,res,next) {
         }
     });
 });
+
+
+router.post ('/insertTour',function (req,res) {
+    
+    for(var i=0;i<req.body.startDate.length;i++)
+    {
+        req.body.startDate[i].date = new Date(req.body.startDate[i].date);
+    }
+    var sample = new Tour({
+        name: req.body.name,
+        company: req.body.company,
+        cover_image: req.body.cover_image,
+        imageList: req.body.imageList,
+        duration: req.body.duration,
+        startDate: req.body.startDate,
+        type: req.body.type,
+        review: req.body.review,
+        overallPoint: req.body.overallPoint,
+        description: req.body.description,
+        content: req.body.content,
+        price: req.body.price, //vnd
+        discount: req.body.discount,
+        isHot: req.body.isHot,
+        telephone: req.body.telephone,
+        email:req.body.email,
+        hotelQuality: req.body.hotelQuality,
+        transport: req.body.transport
+    });
+
+    sample.save(function (err) {
+        if(err) {
+
+            res.send(
+                {
+                    error: true,
+                    message: 'Tạo task thất bại!'
+                });
+        }
+        else {
+
+            res.send(
+                {
+                    error: false,
+                    message: 'Tạo thành công !',
+                    news: sample
+                });
+        }
+
+    });
+});
 module.exports = router;

@@ -50,4 +50,40 @@ router.post('/getNewsWithId',function (req,res,next) {
         }
     });
 });
+
+router.post ('/insertNews',function (req,res) {
+    var sample = new News({
+        title: req.body.title,
+        isHot: req.body.isHot,
+        author: req.body.author,
+        coverImage: req.body.coverImage,
+        description: req.body.description,
+        content: req.body.content,
+        htmlContent: req.body.htmlContent,
+        date_create: new Date (),
+        date_update: new Date(req.body.date_update),
+        related: req.body.related
+    });
+
+    sample.save(function (err) {
+        if(err) {
+
+            res.send(
+                {
+                    error: true,
+                    message: 'Tạo task thất bại!'
+                });
+        }
+        else {
+
+            res.send(
+                {
+                    error: false,
+                    message: 'Tạo thành công !',
+                    news: sample
+                });
+        }
+
+    });
+});
 module.exports = router;

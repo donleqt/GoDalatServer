@@ -10,7 +10,7 @@ var locationSchema = new mongoose.Schema({
     hasMap: String,
     review:String,
     telephone: String,
-    openHour: {begin: Date,end:Date},
+    openHour: {begin: String,end:String},
     extensiveInfo: [{name: String,content:String}],
     coverImage: String,
     imageList: [{url:String}],
