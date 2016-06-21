@@ -3,7 +3,7 @@
  */
 var mongoose = require('mongoose');
 var locationSchema = new mongoose.Schema({
-    name: { type : String , index:true,required: true},
+    name: { type : String ,required: true},
     address: String,
     type: String,
     geo: { lat: Number, long: Number },
@@ -16,7 +16,7 @@ var locationSchema = new mongoose.Schema({
     imageList: [{url:String}],
     description: String,
     summary: String,
-    relatedTour: [{tourId:String}],
+    relatedTour: String,
     isHot: Boolean,
     rate_total:
     {
@@ -29,7 +29,7 @@ var locationSchema = new mongoose.Schema({
     }
 });
 
-
+locationSchema.index({geo:1});
 var Location= module.exports= mongoose.model('Location', locationSchema)
 
 

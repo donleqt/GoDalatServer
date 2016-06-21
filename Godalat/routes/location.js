@@ -28,7 +28,8 @@ router.get('/getAllLocation', function (req,res,next) {
 });
 
 router.post('/getLocationByTypeId', function (req,res) {
-    Location.find({type:req.body.id},function (err,data) {
+    var page = req.body.page;
+    Location.find({type:req.body.id}).skip(10*page).limit(10).exec(function (err,data) {
         if(err){
             res.send({
                 error:true,
@@ -55,9 +56,8 @@ router.get('/getAllLocationNoContent',function (req,res,next) {
     });
 });
 
-router.post('/getLocationWithId',function (req,res,next) {
+    router.post('/getLocationById',function (req,res,next) {
     var condition = {_id: new ObjectId(req.body._id)};
-   // console.log(condition);
     Location.find(condition).exec(function (err,data) {
         if(err){
             res.send({
@@ -234,4 +234,57 @@ router.get('/addTest', function(req, res, next) {
     });
 });
 
+router.post('/getHotLocation',function (req,res) {
+   Location.find({isHot:true}).exec(function (err,data) {
+       if(err){
+           res.send({
+               error:true,
+               message:'Lấy thất bại!'
+           });
+       }
+       else{
+           res.send(data);
+       }
+   })
+});
+router.post('/getRelatedLocation',function (req,res) {
+    Location.findOne({_id:new ObjecId(req.body.id)}).exec(function (err,data) {
+        if(err){
+            res.send({
+                error:true,
+                message:'Lấy thất bại!'
+            });
+        }
+        else{
+            Location.find({type:data.type}).sort({name:-1}).limit(5).exec(function (err, location) {
+                if(err){
+                    res.send({
+                        error:true,
+                        message:'Lấy thất bại!'
+                    });
+                }
+                else{
+                    res.send(location);
+                }
+            });
+
+        }
+    });
+    
+
+});
+router.post('/getNearByLocation',function (req,res) {
+   var geo = {
+       lat: req.body.lat,
+       long: req.body.long
+   };
+    Location.find({geo: {$near:[11,108]}}).exec(function (err,data) {
+        res.json(data);
+    });
+});
+
+
 module.exports = router;
+
+
+
