@@ -78,7 +78,7 @@ router.post ('/insertTour',function (req,res) {
 
     sample.save(function (err) {
         if(err) {
-
+            console.log(err);
             res.send(
                 {
                     error: true,

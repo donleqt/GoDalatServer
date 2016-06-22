@@ -8,7 +8,7 @@ var TourSchema = new mongoose.Schema ({
     company: String,
     cover_image: String,
     imageList: [{url:String}],
-    duration: Number,
+    duration: String,
     startDate:String,
     type: String,
     review: String,
