@@ -3,7 +3,7 @@
  */
 var mongoose = require('mongoose');
 
-var TourSchema = new mongoose.schema ({
+var TourSchema = new mongoose.Schema ({
     name: String,
     company: String,
     cover_image: String,

@@ -4,7 +4,7 @@
 var express = require('express');
 mongoose = require('mongoose');
 router = express.Router();
-Tour = require('../model/News');
+Tour = require('../model/Tour');
 ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/getAllTour',function (req,res,next) {
@@ -54,10 +54,7 @@ router.post('/getTourWithId',function (req,res,next) {
 
 router.post ('/insertTour',function (req,res) {
     
-    for(var i=0;i<req.body.startDate.length;i++)
-    {
-        req.body.startDate[i].date = new Date(req.body.startDate[i].date);
-    }
+    console.log(req.body);
     var sample = new Tour({
         name: req.body.name,
         company: req.body.company,
