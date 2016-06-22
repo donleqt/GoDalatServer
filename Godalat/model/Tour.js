@@ -9,7 +9,7 @@ var TourSchema = new mongoose.schema ({
     cover_image: String,
     imageList: [{url:String}],
     duration: Number,
-    startDate: [{date:Date}],
+    startDate:String,
     type: String,
     review: String,
     overallPoint: Number,

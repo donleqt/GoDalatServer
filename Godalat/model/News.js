@@ -11,15 +11,7 @@ var NewsSchema = new mongoose.Schema({
     content: String,
     htmlContent: String,
     date_create: Date,
-    date_update: Date,
-    related: [
-        {
-            id: String,
-            cover:String,
-            title:String
-        }
-    ]
-
+    date_update: Date
 
 });
 

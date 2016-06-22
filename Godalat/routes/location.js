@@ -56,7 +56,7 @@ router.get('/getAllLocationNoContent',function (req,res,next) {
     });
 });
 
-    router.post('/getLocationById',function (req,res,next) {
+router.post('/getLocationById',function (req,res,next) {
     var condition = {_id: new ObjectId(req.body._id)};
     Location.find(condition).exec(function (err,data) {
         if(err){
@@ -115,7 +115,7 @@ router.post('/insertLocation',function (req,res,next) {
    //         one_star:0
    //     }
    // }
-    try {
+    console.log(req.body);
     var newLocation = {
         name: req.body.name,
         address: req.body.address,
@@ -128,9 +128,9 @@ router.post('/insertLocation',function (req,res,next) {
         extensiveInfo: JSON.parse(req.body.extensiveInfo),
         coverImage: req.body.coverImage,
         imageList: JSON.parse(req.body.imageList),
-        description: req.body.description,
+        description: req.body.summary,
         summary:  req.body.summary,
-        relatedTour: JSON.parse(req.body.relatedTour),
+        relatedTour: req.body.relatedTour,
         isHot: req.body.isHot,
         rate_total: {
             begin_star:0,
@@ -157,13 +157,8 @@ router.post('/insertLocation',function (req,res,next) {
         }
 
     });
-    }
-    catch (e){
-        res.send({
-            error:true,
-            message:'Thêm thất bại!'
-        });
-    }
+
+
 });
 router.get('/loadTest', function(req, res, next) {
     LocationType.find({},function (err,data) {

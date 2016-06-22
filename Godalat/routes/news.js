@@ -60,9 +60,9 @@ router.post ('/insertNews',function (req,res) {
         description: req.body.description,
         content: req.body.content,
         htmlContent: req.body.htmlContent,
-        date_create: new Date (),
-        date_update: new Date(req.body.date_update),
-        related: req.body.related
+        date_create: Date.now(),
+        date_update: Date.now(),
+        related: []
     });
 
     sample.save(function (err) {
