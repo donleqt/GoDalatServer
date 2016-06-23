@@ -16,7 +16,7 @@ var locationSchema = new mongoose.Schema({
     imageList: [{url:String}],
     description: String,
     summary: String,
-    relatedTour: String,
+    relatedTour: [],
     isHot: Boolean,
     rate_total:
     {

@@ -52,49 +52,60 @@ router.post('/getTourWithId',function (req,res,next) {
 });
 
 
-router.post ('/insertTour',function (req,res) {
+router.post ('/insertTour',function (req,res,next) {
     
-    console.log(req.body);
-    var sample = new Tour({
-        name: req.body.name,
-        company: req.body.company,
-        cover_image: req.body.cover_image,
-        imageList: req.body.imageList,
-        duration: req.body.duration,
-        startDate: req.body.startDate,
-        type: req.body.type,
-        review: req.body.review,
-        overallPoint: req.body.overallPoint,
-        description: req.body.description,
-        content: req.body.content,
-        price: req.body.price, //vnd
-        discount: req.body.discount,
-        isHot: req.body.isHot,
-        telephone: req.body.telephone,
-        email:req.body.email,
-        hotelQuality: req.body.hotelQuality,
-        transport: req.body.transport
-    });
+    if (req.body.name == '')
+    {
+        res.send(
+            {
+                error: true,
+                message: 'Tạo task phải có tên chứ!'
+            });
 
-    sample.save(function (err) {
-        if(err) {
-            console.log(err);
-            res.send(
-                {
-                    error: true,
-                    message: 'Tạo task thất bại!'
-                });
-        }
-        else {
+    }
+    else{
+        var sample = new Tour({
+            name: req.body.name,
+            company: req.body.company,
+            cover_image: req.body.cover_image,
+            imageList: req.body.imageList,
+            duration: req.body.duration,
+            startDate: req.body.startDate,
+            type: req.body.type,
+            review: req.body.review,
+            overallPoint: req.body.overallPoint,
+            description: req.body.description,
+            content: req.body.content,
+            price: req.body.price, //vnd
+            discount: req.body.discount,
+            isHot: req.body.isHot,
+            telephone: req.body.telephone,
+            email:req.body.email,
+            hotelQuality: req.body.hotelQuality,
+            transport: req.body.transport
+        });
 
-            res.send(
-                {
-                    error: false,
-                    message: 'Tạo thành công !',
-                    news: sample
-                });
-        }
+        sample.save(function (err) {
+            if(err) {
+                console.log(err);
+                res.send(
+                    {
+                        error: true,
+                        message: 'Tạo task thất bại!'
+                    });
+            }
+            else {
 
-    });
+                res.send(
+                    {
+                        error: false,
+                        message: 'Tạo thành công !',
+                        news: sample
+                    });
+            }
+
+        });
+    }
+
 });
 module.exports = router;

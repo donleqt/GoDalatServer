@@ -72,51 +72,8 @@ router.post('/getLocationById',function (req,res,next) {
 });
 
 router.post('/insertLocation',function (req,res,next) {
-   // var newLocation = {
-   //     name: 'Thung lũng tình yêu',
-   //     address: '05 - 07 Mai Anh Đào. P8. TP. Đà Lạt',
-   //     type: 1,
-   //     geo: {
-   //         lat: 11.980206,
-   //         long: 108.450302
-   //     },
-   //     hasMap: 'http://maps.google.com/?q=11.980206, 108.450270',
-   //     review:'',
-   //     telephone: '0633821448',
-   //     openHour: {begin: null,end:null},
-   //     extensiveInfo: [
-   //         {
-   //             name: 'Địa chỉ',
-   //             content: '05 - 07 Mai Anh Đào. P8. TP. Đà Lạt'
-   //         },
-   //         {
-   //             name: 'Điện thoại',
-   //             content: '0633.821.448'
-   //         },
-   //         {
-   //             name: 'Vé vào cổng',
-   //             content: '40.000đ/ khách người lớn, 20.000đ/ khách trẻ nhỏ (tham khảo).'
-   //         }
-   //     ],
-   //     coverImage: [{url:'img/location/thunglungty.jpg'}],
-   //     imageList: [{url:'img/location/thunglungty.jpg'}],
-   //     description: 'Nằm cách trung tâm thành phố Đà Lạt khoảng 5km thung lũng tình yêu là một khu du lịch đầy thơ mộng luôn cuốn hút mọi du khách gần xa tới tham quan.',
-   //     summary:  'Nằm cách trung tâm thành phố Đà Lạt khoảng 5km thung lũng tình yêu là một khu du lịch đầy thơ mộng luôn cuốn hút mọi du khách gần xa tới tham quan.'
-   //     + 'Bao quanh thung lũng tình yêu là Hồ Đa Thiện và rừng thông quanh năm xanh ngắt một màu.',
-   //     relatedTour: null,
-   //     isHot: true,
-   //     rate_total:
-   //     {
-   //         begin_star:0,
-   //         five_star:0,
-   //         four_star:0,
-   //         three_star:0,
-   //         two_star:0,
-   //         one_star:0
-   //     }
-   // }
-    console.log(req.body);
-    var newLocation = {
+
+    var newLocation = new Location({
         name: req.body.name,
         address: req.body.address,
         type: req.body.type,
@@ -125,9 +82,9 @@ router.post('/insertLocation',function (req,res,next) {
         review:req.body.review,
         telephone: req.body.telephone,
         openHour: req.body.openHour,
-        extensiveInfo: JSON.parse(req.body.extensiveInfo),
+        extensiveInfo: req.body.extensiveInfo,
         coverImage: req.body.coverImage,
-        imageList: JSON.parse(req.body.imageList),
+        imageList: req.body.imageList,
         description: req.body.summary,
         summary:  req.body.summary,
         relatedTour: req.body.relatedTour,
@@ -141,8 +98,10 @@ router.post('/insertLocation',function (req,res,next) {
             one_star:0
         }
         
-    };
-    newLocation.save(function(err,data){
+    });
+   
+    newLocation.save(function(err){
+
         if(err){
             res.send({
                 error:true,
