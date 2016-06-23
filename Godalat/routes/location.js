@@ -262,7 +262,7 @@ router.post('/getRelatedLocation',function (req,res) {
     
 
 });
-router.post('/getNearByLocation',function (req,res) {
+router.post('/getNearByLocation2',function (req,res) {
    var geo = {
        lat: req.body.lat,
        long: req.body.long
@@ -277,7 +277,18 @@ router.post('/getNearByLocation',function (req,res) {
         res.json(kq);
     });
 });
-
+router.post('/getNearByLocation',function (req,res) {
+    var distance = req.body.distance; // this in km distance
+    if (distance == undefined)
+        distance=5;
+    var geo = {
+        lat: req.body.lat,
+        long: req.body.long
+    };
+    Location.find({geo:{$near:[geo.lat,geo.long],$maxDistance:distance/111.12}}).exec(function (err,data) {
+        res.json(data);
+    })
+});
 router.post ('/updateLocation',function (req,res) {
     var condition = new ObjectId( req.body._id);
     var update = {
