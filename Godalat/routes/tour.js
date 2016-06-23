@@ -8,7 +8,8 @@ Tour = require('../model/Tour');
 ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/getAllTour',function (req,res,next) {
-    Tour.find({}).sort({date_create:1}).exec(function (err,data) {
+    var n = req.body.page;
+    Tour.find({}).sort({date_create:1}).skip(10*n).limit(10).exec(function (err,data) {
         if(err){
             res.send({
                 error:true,

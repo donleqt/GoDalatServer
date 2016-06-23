@@ -8,7 +8,8 @@ var express = require('express');
     ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/getAllNews',function (req,res,next) {
-   News.find({}).sort({date_create:1}).exec(function (err,data) {
+    var n= req.body.page;
+   News.find({}).sort({date_create:1}).skip(10*n).limit(10).exec(function (err,data) {
        if(err){
            res.send({
                error:true,
