@@ -246,8 +246,14 @@ router.post('/getNearByLocation',function (req,res) {
        lat: req.body.lat,
        long: req.body.long
    };
-    Location.find({geo: {$near:[11,108]}}).exec(function (err,data) {
-        res.json(data);
+    Location.find({}).exec(function (err,data) {
+
+        var kq = [];
+        for (var i=0;i<data.length;i++) {
+            var distance = getDistanceFromLatLonInKm(data[i].geo.lat,data[i].geo.long,geo.lat,geo.long);
+            if (distance <=2) kq.push(data[i]);
+        }
+        res.json(kq);
     });
 });
 
@@ -276,7 +282,23 @@ router.post ('/updateLocation',function (req,res) {
     });
 
 });
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1);
+    var a =
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon/2) * Math.sin(dLon/2)
+        ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c; // Distance in km
+    return d;
+}
 
+function deg2rad(deg) {
+    return deg * (Math.PI/180)
+}
 module.exports = router;
 
 

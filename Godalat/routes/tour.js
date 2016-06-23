@@ -7,7 +7,7 @@ router = express.Router();
 Tour = require('../model/Tour');
 ObjectId = require('mongoose').Types.ObjectId;
 
-router.get('/getAllTour',function (req,res,next) {
+router.post('/getAllTour',function (req,res,next) {
     var n = req.body.page;
     Tour.find({}).sort({date_create:1}).skip(10*n).limit(10).exec(function (err,data) {
         if(err){

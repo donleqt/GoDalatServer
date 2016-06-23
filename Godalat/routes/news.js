@@ -7,7 +7,7 @@ var express = require('express');
     News = require('../model/News');
     ObjectId = require('mongoose').Types.ObjectId;
 
-router.get('/getAllNews',function (req,res,next) {
+router.post('/getAllNews',function (req,res,next) {
     var n= req.body.page;
    News.find({}).sort({date_create:1}).skip(10*n).limit(10).exec(function (err,data) {
        if(err){
