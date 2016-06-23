@@ -8,18 +8,36 @@ var express = require('express');
     ObjectId = require('mongoose').Types.ObjectId;
 
 router.post('/getAllNews',function (req,res,next) {
-    var n= req.body.page;
-   News.find({}).sort({date_create:1}).skip(10*n).limit(10).exec(function (err,data) {
-       if(err){
-           res.send({
-               error:true,
-               message:'Lấy thất bại!'
-           });
-       }
-       else{
-           res.send(data);
-       }
-   });
+    if (req.body.page == undefined)
+    {
+
+        News.find({}).sort({date_create:1}).exec(function (err,data) {
+            if(err){
+                res.send({
+                    error:true,
+                    message:'Lấy thất bại!'
+                });
+            }
+            else{
+                res.send(data);
+            }
+        });
+    }
+    else {
+        var n= req.body.page;
+        News.find({}).sort({date_create:1}).skip(10*n).limit(10).exec(function (err,data) {
+            if(err){
+                res.send({
+                    error:true,
+                    message:'Lấy thất bại!'
+                });
+            }
+            else{
+                res.send(data);
+            }
+        });
+    }
+
 });
 
 router.get('/getAllNewsNoContent',function (req,res,next) {

@@ -4,7 +4,8 @@ var Location = require('../model/Location');
 var LocationType = require('../model/LocationType');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
-
+var Tour = require('../model/Tour');
+var News=require('../model/News');
 //Location Type
 //  isHot -
 //  Thắng Cảnh - 2
@@ -201,7 +202,27 @@ router.get('/addTest', function(req, res, next) {
         }
     });
 });
-
+router.post('/deleteByIdAndType',function (req,res,next) {
+    var type=req.body.type;
+    var id = new ObjectId(req.body.id);
+    if (type=='news')
+    {
+        News.remove({_id: id}, function(err,data){
+            res.send(data);
+        });
+    }
+    else if (type=='location'){
+        Location.remove({_id: id}, function(err,data){
+            res.send(data);
+        });
+    }
+        else if (type=='tour') {
+        Tour.remove({_id: id}, function(err,data){
+            res.send(data);
+        });
+    }
+    else res.send("Có lỗi xảy ra");
+});
 router.post('/getHotLocation',function (req,res) {
    Location.find({isHot:true}).exec(function (err,data) {
        if(err){

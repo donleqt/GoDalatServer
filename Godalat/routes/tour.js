@@ -8,18 +8,35 @@ Tour = require('../model/Tour');
 ObjectId = require('mongoose').Types.ObjectId;
 
 router.post('/getAllTour',function (req,res,next) {
-    var n = req.body.page;
-    Tour.find({}).sort({date_create:1}).skip(10*n).limit(10).exec(function (err,data) {
-        if(err){
-            res.send({
-                error:true,
-                message:'Lấy thất bại!'
-            });
-        }
-        else{
-            res.send(data);
-        }
-    });
+    if (req.body.page == undefined)
+    {
+
+        Tour.find({}).sort({date_create:1}).exec(function (err,data) {
+            if(err){
+                res.send({
+                    error:true,
+                    message:'Lấy thất bại!'
+                });
+            }
+            else{
+                res.send(data);
+            }
+        });
+    }
+    else {
+        var n = req.body.page;
+        Tour.find({}).sort({date_create: 1}).skip(10 * n).limit(10).exec(function (err, data) {
+            if (err) {
+                res.send({
+                    error: true,
+                    message: 'Lấy thất bại!'
+                });
+            }
+            else {
+                res.send(data);
+            }
+        });
+    }
 });
 
 router.get('/getAllTourNoContent',function (req,res,next) {
