@@ -71,6 +71,20 @@ router.post('/getLocationById',function (req,res,next) {
     });
 });
 
+router.post('/getHotLocation',function (req,res) {
+    Location.find({isHot:true}).exec(function (err,data) {
+        if(err){
+            res.send({
+                error:true,
+                message:'Lấy thất bại!'
+            });
+        }
+        else{
+            res.send(data);
+        }
+    });
+});
+
 router.post('/insertLocation',function (req,res,next) {
     console.log(req.body.extensiveInfo);
     var newLocation = new Location({
