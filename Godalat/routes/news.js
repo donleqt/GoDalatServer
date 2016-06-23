@@ -35,10 +35,10 @@ router.get('/getAllNewsNoContent',function (req,res,next) {
     });
 });
 
-router.post('/getNewsWithId',function (req,res,next) {
+router.post('/getNewsById',function (req,res,next) {
     var condition = {_id: new ObjectId(req.body._id)};
     console.log(condition);
-    News.find(condition).exec(function (err,data) {
+    News.findOne(condition).exec(function (err,data) {
         if(err){
             res.send({
                 error:true,
@@ -51,6 +51,25 @@ router.post('/getNewsWithId',function (req,res,next) {
     });
 });
 
+router.post ('/updateNews',function (req,res) {
+    var condition = new ObjectId( req.body._id);
+    var update = {
+        title: req.body.title,
+        isHot: req.body.isHot,
+        author: req.body.author,
+        coverImage: req.body.coverImage,
+        description: req.body.description,
+        content: req.body.content,
+        htmlContent: req.body.htmlContent,
+        date_update: Date.now(),
+        related: []
+
+    };
+    News.findOneAndUpdate(condition,update, function(err,data){
+        res.send("Thành công !");
+    });
+
+});
 router.post ('/insertNews',function (req,res) {
     var sample = new News({
         title: req.body.title,

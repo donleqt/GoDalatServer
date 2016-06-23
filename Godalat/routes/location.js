@@ -58,7 +58,7 @@ router.get('/getAllLocationNoContent',function (req,res,next) {
 
 router.post('/getLocationById',function (req,res,next) {
     var condition = {_id: new ObjectId(req.body._id)};
-    Location.find(condition).exec(function (err,data) {
+    Location.findOne(condition).exec(function (err,data) {
         if(err){
             res.send({
                 error:true,
@@ -72,7 +72,7 @@ router.post('/getLocationById',function (req,res,next) {
 });
 
 router.post('/insertLocation',function (req,res,next) {
-
+    console.log(req.body.extensiveInfo);
     var newLocation = new Location({
         name: req.body.name,
         address: req.body.address,
@@ -99,7 +99,7 @@ router.post('/insertLocation',function (req,res,next) {
         }
         
     });
-   
+
     newLocation.save(function(err){
 
         if(err){
@@ -237,6 +237,31 @@ router.post('/getNearByLocation',function (req,res) {
     });
 });
 
+router.post ('/updateLocation',function (req,res) {
+    var condition = new ObjectId( req.body._id);
+    var update = {
+        name: req.body.name,
+        address: req.body.address,
+        type: req.body.type,
+        geo: req.body.geo,
+        hasMap: req.body.hasMap,
+        review:req.body.review,
+        telephone: req.body.telephone,
+        openHour: req.body.openHour,
+        extensiveInfo: req.body.extensiveInfo,
+        coverImage: req.body.coverImage,
+        imageList: req.body.imageList,
+        description: req.body.summary,
+        summary:  req.body.summary,
+        relatedTour: req.body.relatedTour,
+        isHot: req.body.isHot,
+
+    };
+    Location.findOneAndUpdate(condition,update, function(err,data){
+        res.send("Thành công !");
+    });
+
+});
 
 module.exports = router;
 

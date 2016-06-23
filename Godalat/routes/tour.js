@@ -35,10 +35,10 @@ router.get('/getAllTourNoContent',function (req,res,next) {
     });
 });
 
-router.post('/getTourWithId',function (req,res,next) {
+router.post('/getTourById',function (req,res,next) {
     var condition = {_id: new ObjectId(req.body._id)};
     console.log(condition);
-    Tour.find(condition).exec(function (err,data) {
+    Tour.findOne(condition).exec(function (err,data) {
         if(err){
             res.send({
                 error:true,
@@ -52,6 +52,34 @@ router.post('/getTourWithId',function (req,res,next) {
 });
 
 
+router.post ('/updateTour',function (req,res) {
+    var condition = new ObjectId( req.body._id);
+    var update = {
+        name: req.body.name,
+        company: req.body.company,
+        cover_image: req.body.cover_image,
+        imageList: req.body.imageList,
+        duration: req.body.duration,
+        startDate: req.body.startDate,
+        type: req.body.type,
+        review: req.body.review,
+        overallPoint: req.body.overallPoint,
+        description: req.body.description,
+        content: req.body.content,
+        price: req.body.price, //vnd
+        discount: req.body.discount,
+        isHot: req.body.isHot,
+        telephone: req.body.telephone,
+        email:req.body.email,
+        hotelQuality: req.body.hotelQuality,
+        transport: req.body.transport
+
+    };
+    Tour.findOneAndUpdate(condition,update, function(err,data){
+        res.send("Thành công !");
+    });
+
+});
 router.post ('/insertTour',function (req,res,next) {
     
     if (req.body.name == '')
